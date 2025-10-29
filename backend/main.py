@@ -14,7 +14,7 @@ app.add_middleware(
     allow_origins=["http://localhost:3000", "http://localhost:5173"],
     allow_credentials=True,
     allow_methods=["*"],
-    allow_headers=["*"],
+    allow_headers=["Content-Type", "Authorization"],
 )
 
 # Database connection pool
@@ -98,6 +98,10 @@ async def shutdown():
 @app.get("/health")
 async def health_check():
     return {"status": "healthy", "timestamp": datetime.utcnow()}
+
+@app.get("/ping")
+async def ping():
+    return {"message": "pong"}
 
 # Todo endpoints
 @app.get("/api/todos", response_model=List[Todo])
